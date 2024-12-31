@@ -135,15 +135,21 @@ Imagine that you are reading a matrix from the top to bottom, left to right. For
 
 For example, if A:
 
-$$A = \begin{bmatrix} 2 & 3 \\ 3 & 4 \\ 4 & 5\end{bmatrix}$$
+```math
+A = \begin{bmatrix} 2 & 3 \\ 3 & 4 \\ 4 & 5\end{bmatrix}
+```
  
  is resized to a matrix of size $2\times3$:
 
- $$A' = \begin{bmatrix}2 & 3 & 3 \\ 4 & 4 & 5\end{bmatrix}$$
+```math
+A' = \begin{bmatrix}2 & 3 & 3 \\ 4 & 4 & 5\end{bmatrix}
+```
 
 and if resized to a matrix of size $6 \times 1$:
 
- $$A' = \begin{bmatrix}2 \\ 3 \\ 3 \\ 4 \\ 4 \\ 5\end{bmatrix}$$
+```math
+A' = \begin{bmatrix}2 \\ 3 \\ 3 \\ 4 \\ 4 \\ 5\end{bmatrix}
+```
 
 Intended outcome: `testcase4()` in `main()` should produce the intended output given.
 
@@ -293,7 +299,9 @@ Now, for in the image containing `0` and `1`, Only consider points that has valu
 
 If the line is $y = bx + a$
 
-$$b = \frac{S_{XY}}{S_{XX}} = \frac{\sum_{i=0}^N{x_iy_i} - (\sum_{i=0}^N{x_i})(\sum_{i=0}^N{y_i})/N }{\sum_{i=0}^N{x_i^2} - (\sum_{i=0}^N{x_i})^2/N}~ \textsf{and}~ a= \frac{\sum_{i=0}^N y_i}{N} - b  \frac{\sum_{i=0}^N x_i}{N}$$
+```math
+b = \frac{S_{XY}}{S_{XX}} = \frac{\sum_{i=0}^N{x_iy_i} - (\sum_{i=0}^N{x_i})(\sum_{i=0}^N{y_i})/N }{\sum_{i=0}^N{x_i^2} - (\sum_{i=0}^N{x_i})^2/N}~ \textsf{and}~ a= \frac{\sum_{i=0}^N y_i}{N} - b  \frac{\sum_{i=0}^N x_i}{N}
+```
 
 Given that $N$ is the amount of points in the list.
 
@@ -315,7 +323,9 @@ As we have implemented templated matrix, why not continue on and do some linear 
 
 Let's say we have the list of points $(x_i, y_i)$ as before, we want to find a cubic polynomial such that, hopefully:
 
-$$\begin{cases}a_0 + a_1x_1 + a_2x_1^2 + a_3x_1^3 = y_1 \\ a_0 + a_1x_2 + a_2x_2^2 + a_3x_2^3 = y_2 \\ \vdots \\ a_0 + a_1x_N + a_2x_N^2 + a_3x_N^3 = y_N \end{cases}$$
+```math
+\begin{cases}a_0 + a_1x_1 + a_2x_1^2 + a_3x_1^3 = y_1 \\ a_0 + a_1x_2 + a_2x_2^2 + a_3x_2^3 = y_2 \\ \vdots \\ a_0 + a_1x_N + a_2x_N^2 + a_3x_N^3 = y_N \end{cases}
+```
 
 This is equivalent to a system of linear equation as such:
 
@@ -326,7 +336,9 @@ However, this equation might not have a solution, as there might be some random 
 
 To approximate a solution (the matrix $x$), then we need to find the solution to:
 
-$$ A^\top A x = A^\top b \to x  = (A^\top A)^{-1}A^\top$$
+```math
+A^\top A x = A^\top b \to x  = (A^\top A)^{-1}A^\top
+```
 
 (This is the least squares solution method)
 
@@ -334,7 +346,9 @@ $$ A^\top A x = A^\top b \to x  = (A^\top A)^{-1}A^\top$$
 
 $A^\top$ is the transpose of a matrix, i.e. each columns of $A$ will become rows of $A^\top$, e.g.
 
-$$A = \begin{bmatrix} 1 & 2 \\ 2 & 3 \\ 3 & 4 \end{bmatrix}\to A^\top = \begin{bmatrix}1 & 2 & 3 \\ 2 & 3 & 4\end{bmatrix}$$
+```math
+A = \begin{bmatrix} 1 & 2 \\ 2 & 3 \\ 3 & 4 \end{bmatrix}\to A^\top = \begin{bmatrix}1 & 2 & 3 \\ 2 & 3 & 4\end{bmatrix}
+```
 
 This is already implemented in `matrix_op_self` using the self-defined operator `T*`
 
