@@ -97,11 +97,15 @@ $A = B \times C \leftrightarrow A_{ij} = B_{i0}C_{0j} + B_{i1}C_{1j} + ... + B_{
 
 So, for example:
 
-$$B = \begin{bmatrix}1 & 2 \\ 2 & 3 \\ 3& 4\end{bmatrix}, ~ C = \begin{bmatrix} 1 & 2 & 3 \\ 2 & 1 & 2\end{bmatrix}$$
+```math
+B = \begin{bmatrix}1 & 2 \\ 2 & 3 \\ 3& 4\end{bmatrix}, ~ C = \begin{bmatrix} 1 & 2 & 3 \\ 2 & 1 & 2\end{bmatrix}
+```
 
 Then $A$:
 
-$$A = \begin{bmatrix}1 \cdot 1 + 2\cdot 2 & 1\cdot 2 + 2 \cdot 1& 1 \cdot 3 + 2\cdot2 \\  2 \cdot 1 + 3\cdot 2 & 2\cdot 2 + 3 \cdot 1& 2 \cdot 3 + 3\cdot2 \\ 3 \cdot 1 + 4 \cdot 2 & 3 \cdot 2 + 4 \cdot 1& 3 \cdot 3 + 4\cdot2\end{bmatrix} = \begin{bmatrix} 5 & 4 & 7 \\ 8 & 7 & 12 \\ 11 & 10 & 17\end{bmatrix}$$
+```math
+A = \begin{bmatrix}1 \cdot 1 + 2\cdot 2 & 1\cdot 2 + 2 \cdot 1& 1 \cdot 3 + 2\cdot2 \\  2 \cdot 1 + 3\cdot 2 & 2\cdot 2 + 3 \cdot 1& 2 \cdot 3 + 3\cdot2 \\ 3 \cdot 1 + 4 \cdot 2 & 3 \cdot 2 + 4 \cdot 1& 3 \cdot 3 + 4\cdot2\end{bmatrix} = \begin{bmatrix} 5 & 4 & 7 \\ 8 & 7 & 12 \\ 11 & 10 & 17\end{bmatrix}
+```
 
 $A_{ij}$ means the element in the $i$-th row and $j$-th column in the matrix $A$.
 
