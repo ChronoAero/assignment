@@ -329,7 +329,9 @@ Let's say we have the list of points $(x_i, y_i)$ as before, we want to find a c
 
 This is equivalent to a system of linear equation as such:
 
-$$\underbrace{\begin{bmatrix}1 & x_1 & x_1^2 & x_1^3 \\ 1 & x_2 & x_2^2 & x_2^3 \\ \vdots & \vdots & \vdots & \vdots \\ 1 & x_N & x_N^2 & x_N^3 \end{bmatrix}}_{A} \underbrace{\begin{bmatrix}a_0 \\ a_1 \\ a_2 \\ a_3\end{bmatrix}}_x = \underbrace{\begin{bmatrix}y_1 \\ y_2 \\ \vdots \\ y_N\end{bmatrix}}_b$$
+```math
+\underbrace{\begin{bmatrix}1 & x_1 & x_1^2 & x_1^3 \\ 1 & x_2 & x_2^2 & x_2^3 \\ \vdots & \vdots & \vdots & \vdots \\ 1 & x_N & x_N^2 & x_N^3 \end{bmatrix}}_{A} \underbrace{\begin{bmatrix}a_0 \\ a_1 \\ a_2 \\ a_3\end{bmatrix}}_x = \underbrace{\begin{bmatrix}y_1 \\ y_2 \\ \vdots \\ y_N\end{bmatrix}}_b
+```
 
 
 However, this equation might not have a solution, as there might be some random error in the image or the track being more complicated than a cubic polynomial, etc.
