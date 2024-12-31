@@ -60,7 +60,7 @@ Start by going over `matrix.h` and try to understand what are the given macros d
 
 - `matrix_op_self`: Perform an operation on the matrix itself. The modification will be done directly on the matrix. Any `__op` that works on each of the elements in matrix will work with the addition of `T*` that will transpose the matrix.
 
-- `matrix_from_slice`: Takes elements from another within rows in the range $[\textsf{start\_row}, \textsf{end\_row})$ and columns in the range $[\textsf{start\_col}, \textsf{end\_col})$. The end index is **excluded**. `__M1` will be a new matrix. This is your Task 1.3
+- `matrix_from_slice`: Takes elements from another within rows in the range $[\textsf{startrow}, \textsf{endrow})$ and columns in the range $[\textsf{startcol}, \textsf{endcol})$. The end index is **excluded**. `__M1` will be a new matrix. This is your Task 1.3
 
 - `matrix_reshape`: Reshapes a matrix `__M` to `_new_rows` $\times$ `_new_cols`. Suitable checking has been done. To complete this is your Task 1.4
 
