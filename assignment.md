@@ -174,7 +174,7 @@ You may assume that the user is cooperative and will not input indexes such that
 
 Note that this creates a **new matrix**. You may want to see the implementation of `matrix_from_matrix`. The new matrix may have a different type (e.g. the original matrix is `int` but the new matrix from the slice is of type `double`.
 
-For example, if I want to take rows:$[1, 3)$ and columns $[2, 4)$ from the following matrix:
+For example, if I want to take rows: $[1, 3)$ and columns $[2, 4)$ from the following matrix:
 
 ```math
 A = \begin{bmatrix} 1 & 2 & 3 & 4 & 5 \\ 11 & 12 & 13 & 14 & 15 \\ 21 & 22 & 23 & 24 & 25 \\ 31 & 32 & 33 & 34 & 35 \end{bmatrix}
