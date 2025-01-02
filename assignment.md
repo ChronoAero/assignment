@@ -1,5 +1,7 @@
 # Tutorial 1 Assignment: Line Follower Overcomplicated
 
+**Please first take a look at `main.c` all the testcases are there.**
+
 > Sorry for the late release, I will try to make it as light but still fun and covers most concept discussed in tutorial 1. By how late this assingment is released I think you can know how I did not really enjoy writing this assignment 🫠
 >
 > Please note that this is more of an exercise of all the features discussed in the first tutorial. Actually, we do not really program like this (yet, at least) in the past year. So, no need to be intimidated. I think the assignment might not be well-designed too...
@@ -56,7 +58,7 @@ Start by going over `matrix.h` and try to understand what are the given macros d
 
 - `matrix_all`: Creates a matrix by filling the matrix with the value indicated in `__value`, the size should be `__rows` $\times$ `__cols`. The parameter `__M` is the name for the **new variable**. This is your Task 1.1
 
-- `matrix_op_matrix`: Perform an operation on matrix `__M1` and `__M2`, then store the result in `__M0`. `__op` can be any operator that works on the elements of the matrices. There are two additional operators `*x*` for matrix multiplication and `*s*` for matrix stacking. Suitable matrix size check has been done. Task 1.2 is about completing the matrix multiplication part.
+- `matrix_op_matrix`: Perform an operation on matrix `__M1` and `__M2`, then store the result in **existing** `__M0`. `__op` can be any operator that works on the elements of the matrices. There are two additional operators `*x*` for matrix multiplication and `*s*` for matrix stacking. Suitable matrix size check has been done. Task 1.2 is about completing the matrix multiplication part.
 
 - `matrix_op_self`: Perform an operation on the matrix itself. The modification will be done directly on the matrix. Any `__op` that works on each of the elements in matrix will work with the addition of `T*` that will transpose the matrix.
 
@@ -91,6 +93,54 @@ Intended outcome: `testcase1()` in `main()` should produce the intended output g
 ### Task 1.2: Matrix Multiplication in `matrix_op_matrix`
 Complete the macro definition for `matrix_op_matrix` in `matrix.h` such that it can support matrix multiplication.
 
+`matrix_op_matrix` allow any operator to be operated on each element on the same position.
+
+For example, if:
+
+```math
+A = \begin{bmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \\ 7 & 8 & 9 \end{bmatrix} ~\textsf{and}~ B = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1
+```
+
+Then:
+
+```math
+A + B = \begin{matrix} 2 & 2 & 3 \\ 4 & 6 & 6 \\ 7 & 8 & 10 \end{matrix}
+```
+
+for stacking, it does the following:
+
+```math
+A ~\textsf{*s*} ~B = \begin{matrix} 1 & 2 & 3 \\ 4 & 5 & 6 \\ 7 & 8 & 9 \\ 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1\end{matrix}
+```
+
+In code, it is done as the following
+```c
+int X[3][3] = {
+    {1, 2, 3},
+    {4, 5, 6},
+    {7, 8, 9}
+};
+
+int Y[3][3] = {
+    {1, 0, 0},
+    {0, 1, 0},
+    {0, 0, 1}
+};
+
+matrix_from_array2D(int, A, X);
+matrix_from_array2D(int, B, Y);
+
+matrix_all(int, A_plus_B, 3, 3, -1); //create a space to contain the result of A+B (__M0 is an existing matrix!!)
+matrix_all(int, A_s_B, 6, 3, -1); //create a space to contain the result of A stack B
+
+matrix_op_matrix(A_plus_B, A, +, B); //how to compute A+B, of course I can pass the expression "+" :p
+matrix_op_matrix(A_s_B, A, *s*, B); //how to compute A stack B
+
+matrix_free(A); matrix_free(B); matrix_free(A_plus_B); matrix(A_s_B);
+```
+
+You do not need to implement these, you only need to implement the matrix multiplication described below:
+
 Recall that matrix multiplication does the following for a matrix $B$ with size $i \times k$ and matrix $C$ with size $k \times j$, resulting in a matrix of size $i \times j$ :
 
 $A = B \times C \leftrightarrow A_{ij} = B_{i0}C_{0j} + B_{i1}C_{1j} + ... + B_{ik}C_{kj}$
@@ -122,7 +172,19 @@ Complete the macro definition for `matrix_from_slice` in `matrix.h`. Refer to th
 
 You may assume that the user is cooperative and will not input indexes such that it overflows in `__M2`.
 
-Note that this creates a **new matrix**. You may want to see the implementation of `matrix_from_matrix`.
+Note that this creates a **new matrix**. You may want to see the implementation of `matrix_from_matrix`. The new matrix may have a different type (e.g. the original matrix is `int` but the new matrix from the slice is of type `double`.
+
+For example, if I want to take rows:$[1, 3)$ and columns $[2, 4)$ from the following matrix:
+
+```math
+A = \begin{bmatrix} 1 & 2 & 3 & 4 & 5 \\ 11 & 12 & 13 & 14 & 15 \\ 21 & 22 & 23 & 24 & 25 \\ 31 & 32 & 33 & 34 & 35 \end{bmatrix}
+```
+
+Then the matrix slice is:
+
+```math
+A' = \begin{bmatrix} 13 & 14 \\ 22 & 23 \end{bmatrix}
+```
 
 Intended outcome: `testcase3()` in `main()` should produce the intended output given.
 
