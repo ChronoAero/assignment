@@ -183,7 +183,7 @@ A = \begin{bmatrix} 1 & 2 & 3 & 4 & 5 \\ 11 & 12 & 13 & 14 & 15 \\ 21 & 22 & 23 
 Then the matrix slice is:
 
 ```math
-A' = \begin{bmatrix} 13 & 14 \\ 22 & 23 \end{bmatrix}
+A' = \begin{bmatrix} 13 & 14 \\ 23 & 24 \end{bmatrix}
 ```
 
 Intended outcome: `testcase3()` in `main()` should produce the intended output given.
