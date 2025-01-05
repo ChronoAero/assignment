@@ -337,6 +337,10 @@ For example:
 
 ![alt text](images/opening_filter_handdrawn.png)
 
+Note that the pixels outside the border are considered to be `0`s, so for example:
+
+![alt text](images/zero_boundary.png)
+
 In doing these operations, you do not have to do it in place. You may allocate a new dynamic array and later assign it to the matrix. However, remember to free unused dynamic memory.
 
 Despite this method, as seen in the sample output, it does not really remove some cluster of noises, although it did a great work removing small stray noise clusters. Please suggest some method if you can think of some way of removing these unwanted clusters.
@@ -421,7 +425,7 @@ $A^{-1}$ is the inverse of a matrix, it works somewhat like a divisor of $A$ suc
 This is also already implemented in `linalg.c`, please refer to `mmatrix_linalg_get_inv` for the parameters
 
 
-To conclude this assignment, use the implemented matrix library to evaluate $x$, put it inside the matrix `x`. Do this in `image_proc_polyreg`. I have constructed the matrices $A$ and $b$ for you.
+To conclude this assignment, use the implemented matrix library to evaluate $x$, put it inside the matrix `a`. Do this in `image_proc_polyreg`. I have constructed the matrices $A$ and $b$ for you.
 
 > Actually I can kind of agree that the resulting matrix library is annoying to use... let's see if we may have some way to improve it and make it convenient to use... this needs to be considered if we were to try writing a library for the subteam...
 
