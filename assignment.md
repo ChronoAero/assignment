@@ -1,7 +1,5 @@
 # Tutorial 1 Assignment: Line Follower Overcomplicated
 
-**Please first take a look at `main.c` all the testcases are there.**
-
 > Sorry for the late release, I will try to make it as light but still fun and covers most concept discussed in tutorial 1. By how late this assingment is released I think you can know how I did not really enjoy writing this assignment 🫠
 >
 > Please note that this is more of an exercise of all the features discussed in the first tutorial. Actually, we do not really program like this (yet, at least) in the past year. So, no need to be intimidated. I think the assignment might not be well-designed too...
@@ -58,11 +56,11 @@ Start by going over `matrix.h` and try to understand what are the given macros d
 
 - `matrix_all`: Creates a matrix by filling the matrix with the value indicated in `__value`, the size should be `__rows` $\times$ `__cols`. The parameter `__M` is the name for the **new variable**. This is your Task 1.1
 
-- `matrix_op_matrix`: Perform an operation on matrix `__M1` and `__M2`, then store the result in **existing** `__M0`. `__op` can be any operator that works on the elements of the matrices. There are two additional operators `*x*` for matrix multiplication and `*s*` for matrix stacking. Suitable matrix size check has been done. Task 1.2 is about completing the matrix multiplication part.
+- `matrix_op_matrix`: Perform an operation on matrix `__M1` and `__M2`, then store the result in `__M0`. `__op` can be any operator that works on the elements of the matrices. There are two additional operators `*x*` for matrix multiplication and `*s*` for matrix stacking. Suitable matrix size check has been done. Task 1.2 is about completing the matrix multiplication part.
 
 - `matrix_op_self`: Perform an operation on the matrix itself. The modification will be done directly on the matrix. Any `__op` that works on each of the elements in matrix will work with the addition of `T*` that will transpose the matrix.
 
-- `matrix_from_slice`: Takes elements from another within rows in the range $[\textsf{startrow}, \textsf{endrow})$ and columns in the range $[\textsf{startcol}, \textsf{endcol})$. The end index is **excluded**. `__M1` will be a new matrix. This is your Task 1.3
+- `matrix_from_slice`: Takes elements from another within rows in the range $[\textsf{start\_row}, \textsf{end\_row})$ and columns in the range $[\textsf{start\_col}, \textsf{end\_col})$. The end index is **excluded**. `__M1` will be a new matrix. This is your Task 1.3
 
 - `matrix_reshape`: Reshapes a matrix `__M` to `_new_rows` $\times$ `_new_cols`. Suitable checking has been done. To complete this is your Task 1.4
 
@@ -93,69 +91,17 @@ Intended outcome: `testcase1()` in `main()` should produce the intended output g
 ### Task 1.2: Matrix Multiplication in `matrix_op_matrix`
 Complete the macro definition for `matrix_op_matrix` in `matrix.h` such that it can support matrix multiplication.
 
-`matrix_op_matrix` allow any operator to be operated on each element on the same position.
-
-For example, if:
-
-```math
-A = \begin{bmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \\ 7 & 8 & 9 \end{bmatrix} ~\textsf{and}~ B = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1\end{bmatrix}
-```
-
-Then:
-
-```math
-A + B = \begin{bmatrix} 2 & 2 & 3 \\ 4 & 6 & 6 \\ 7 & 8 & 10 \end{bmatrix}
-```
-
-for stacking, it does the following:
-
-```math
-A ~\textsf{*s*} ~B = \begin{bmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \\ 7 & 8 & 9 \\ 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1\end{bmatrix}
-```
-
-In code, it is done as the following
-```c
-int X[3][3] = {
-    {1, 2, 3},
-    {4, 5, 6},
-    {7, 8, 9}
-};
-
-int Y[3][3] = {
-    {1, 0, 0},
-    {0, 1, 0},
-    {0, 0, 1}
-};
-
-matrix_from_array2D(int, A, X);
-matrix_from_array2D(int, B, Y);
-
-matrix_all(int, A_plus_B, 3, 3, -1); //create a space to contain the result of A+B (__M0 is an existing matrix!!)
-matrix_all(int, A_s_B, 6, 3, -1); //create a space to contain the result of A stack B
-
-matrix_op_matrix(A_plus_B, A, +, B); //how to compute A+B, of course I can pass the expression "+" :p
-matrix_op_matrix(A_s_B, A, *s*, B); //how to compute A stack B
-
-matrix_free(A); matrix_free(B); matrix_free(A_plus_B); matrix(A_s_B);
-```
-
-You do not need to implement these, you only need to implement the matrix multiplication described below:
-
 Recall that matrix multiplication does the following for a matrix $B$ with size $i \times k$ and matrix $C$ with size $k \times j$, resulting in a matrix of size $i \times j$ :
 
 $A = B \times C \leftrightarrow A_{ij} = B_{i0}C_{0j} + B_{i1}C_{1j} + ... + B_{ik}C_{kj}$
 
 So, for example:
 
-```math
-B = \begin{bmatrix}1 & 2 \\ 2 & 3 \\ 3& 4\end{bmatrix}, ~ C = \begin{bmatrix} 1 & 2 & 3 \\ 2 & 1 & 2\end{bmatrix}
-```
+$$B = \begin{bmatrix}1 & 2 \\ 2 & 3 \\ 3& 4\end{bmatrix}, ~ C = \begin{bmatrix} 1 & 2 & 3 \\ 2 & 1 & 2\end{bmatrix}$$
 
 Then $A$:
 
-```math
-A = \begin{bmatrix}1 \cdot 1 + 2\cdot 2 & 1\cdot 2 + 2 \cdot 1& 1 \cdot 3 + 2\cdot2 \\  2 \cdot 1 + 3\cdot 2 & 2\cdot 2 + 3 \cdot 1& 2 \cdot 3 + 3\cdot2 \\ 3 \cdot 1 + 4 \cdot 2 & 3 \cdot 2 + 4 \cdot 1& 3 \cdot 3 + 4\cdot2\end{bmatrix} = \begin{bmatrix} 5 & 4 & 7 \\ 8 & 7 & 12 \\ 11 & 10 & 17\end{bmatrix}
-```
+$$A = \begin{bmatrix}1 \cdot 1 + 2\cdot 2 & 1\cdot 2 + 2 \cdot 1& 1 \cdot 3 + 2\cdot2 \\  2 \cdot 1 + 3\cdot 2 & 2\cdot 2 + 3 \cdot 1& 2 \cdot 3 + 3\cdot2 \\ 3 \cdot 1 + 4 \cdot 2 & 3 \cdot 2 + 4 \cdot 1& 3 \cdot 3 + 4\cdot2\end{bmatrix} = \begin{bmatrix} 5 & 4 & 7 \\ 8 & 7 & 12 \\ 11 & 10 & 17\end{bmatrix}$$
 
 $A_{ij}$ means the element in the $i$-th row and $j$-th column in the matrix $A$.
 
@@ -172,19 +118,7 @@ Complete the macro definition for `matrix_from_slice` in `matrix.h`. Refer to th
 
 You may assume that the user is cooperative and will not input indexes such that it overflows in `__M2`.
 
-Note that this creates a **new matrix**. You may want to see the implementation of `matrix_from_matrix`. The new matrix may have a different type (e.g. the original matrix is `int` but the new matrix from the slice is of type `double`.
-
-For example, if I want to take rows: $[1, 3)$ and columns $[2, 4)$ from the following matrix:
-
-```math
-A = \begin{bmatrix} 1 & 2 & 3 & 4 & 5 \\ 11 & 12 & 13 & 14 & 15 \\ 21 & 22 & 23 & 24 & 25 \\ 31 & 32 & 33 & 34 & 35 \end{bmatrix}
-```
-
-Then the matrix slice is:
-
-```math
-A' = \begin{bmatrix} 13 & 14 \\ 23 & 24 \end{bmatrix}
-```
+Note that this creates a **new matrix**. You may want to see the implementation of `matrix_from_matrix`.
 
 Intended outcome: `testcase3()` in `main()` should produce the intended output given.
 
@@ -197,21 +131,15 @@ Imagine that you are reading a matrix from the top to bottom, left to right. For
 
 For example, if A:
 
-```math
-A = \begin{bmatrix} 2 & 3 \\ 3 & 4 \\ 4 & 5\end{bmatrix}
-```
+$$A = \begin{bmatrix} 2 & 3 \\ 3 & 4 \\ 4 & 5\end{bmatrix}$$
  
  is resized to a matrix of size $2\times3$:
 
-```math
-A' = \begin{bmatrix}2 & 3 & 3 \\ 4 & 4 & 5\end{bmatrix}
-```
+ $$A' = \begin{bmatrix}2 & 3 & 3 \\ 4 & 4 & 5\end{bmatrix}$$
 
 and if resized to a matrix of size $6 \times 1$:
 
-```math
-A' = \begin{bmatrix}2 \\ 3 \\ 3 \\ 4 \\ 4 \\ 5\end{bmatrix}
-```
+ $$A' = \begin{bmatrix}2 \\ 3 \\ 3 \\ 4 \\ 4 \\ 5\end{bmatrix}$$
 
 Intended outcome: `testcase4()` in `main()` should produce the intended output given.
 
@@ -339,6 +267,10 @@ For example:
 
 In doing these operations, you do not have to do it in place. You may allocate a new dynamic array and later assign it to the matrix. However, remember to free unused dynamic memory.
 
+Note that the pixels outside the border are considered to be `0`s, so for example:
+
+![alt text](images/zero_boundary.png)
+
 Despite this method, as seen in the sample output, it does not really remove some cluster of noises, although it did a great work removing small stray noise clusters. Please suggest some method if you can think of some way of removing these unwanted clusters.
 
 Intended outcome: `testcase8()` in `main()` should produce the intended output given.
@@ -361,9 +293,7 @@ Now, for in the image containing `0` and `1`, Only consider points that has valu
 
 If the line is $y = bx + a$
 
-```math
-b = \frac{S_{XY}}{S_{XX}} = \frac{\sum_{i=0}^N{x_iy_i} - (\sum_{i=0}^N{x_i})(\sum_{i=0}^N{y_i})/N }{\sum_{i=0}^N{x_i^2} - (\sum_{i=0}^N{x_i})^2/N}~ \textsf{and}~ a= \frac{\sum_{i=0}^N y_i}{N} - b  \frac{\sum_{i=0}^N x_i}{N}
-```
+$$b = \frac{S_{XY}}{S_{XX}} = \frac{\sum_{i=0}^N{x_iy_i} - (\sum_{i=0}^N{x_i})(\sum_{i=0}^N{y_i})/N }{\sum_{i=0}^N{x_i^2} - (\sum_{i=0}^N{x_i})^2/N}~ \textsf{and}~ a= \frac{\sum_{i=0}^N y_i}{N} - b  \frac{\sum_{i=0}^N x_i}{N}$$
 
 Given that $N$ is the amount of points in the list.
 
@@ -385,24 +315,18 @@ As we have implemented templated matrix, why not continue on and do some linear 
 
 Let's say we have the list of points $(x_i, y_i)$ as before, we want to find a cubic polynomial such that, hopefully:
 
-```math
-\begin{cases}a_0 + a_1x_1 + a_2x_1^2 + a_3x_1^3 = y_1 \\ a_0 + a_1x_2 + a_2x_2^2 + a_3x_2^3 = y_2 \\ \vdots \\ a_0 + a_1x_N + a_2x_N^2 + a_3x_N^3 = y_N \end{cases}
-```
+$$\begin{cases}a_0 + a_1x_1 + a_2x_1^2 + a_3x_1^3 = y_1 \\ a_0 + a_1x_2 + a_2x_2^2 + a_3x_2^3 = y_2 \\ \vdots \\ a_0 + a_1x_N + a_2x_N^2 + a_3x_N^3 = y_N \end{cases}$$
 
 This is equivalent to a system of linear equation as such:
 
-```math
-\underbrace{\begin{bmatrix}1 & x_1 & x_1^2 & x_1^3 \\ 1 & x_2 & x_2^2 & x_2^3 \\ \vdots & \vdots & \vdots & \vdots \\ 1 & x_N & x_N^2 & x_N^3 \end{bmatrix}}_{A} \underbrace{\begin{bmatrix}a_0 \\ a_1 \\ a_2 \\ a_3\end{bmatrix}}_x = \underbrace{\begin{bmatrix}y_1 \\ y_2 \\ \vdots \\ y_N\end{bmatrix}}_b
-```
+$$\underbrace{\begin{bmatrix}1 & x_1 & x_1^2 & x_1^3 \\ 1 & x_2 & x_2^2 & x_2^3 \\ \vdots & \vdots & \vdots & \vdots \\ 1 & x_N & x_N^2 & x_N^3 \end{bmatrix}}_{A} \underbrace{\begin{bmatrix}a_0 \\ a_1 \\ a_2 \\ a_3\end{bmatrix}}_x = \underbrace{\begin{bmatrix}y_1 \\ y_2 \\ \vdots \\ y_N\end{bmatrix}}_b$$
 
 
 However, this equation might not have a solution, as there might be some random error in the image or the track being more complicated than a cubic polynomial, etc.
 
 To approximate a solution (the matrix $x$), then we need to find the solution to:
 
-```math
-A^\top A x = A^\top b \to x  = (A^\top A)^{-1}A^\top
-```
+$$ A^\top A x = A^\top b \to x  = (A^\top A)^{-1}A^\top$$
 
 (This is the least squares solution method)
 
@@ -410,9 +334,7 @@ A^\top A x = A^\top b \to x  = (A^\top A)^{-1}A^\top
 
 $A^\top$ is the transpose of a matrix, i.e. each columns of $A$ will become rows of $A^\top$, e.g.
 
-```math
-A = \begin{bmatrix} 1 & 2 \\ 2 & 3 \\ 3 & 4 \end{bmatrix}\to A^\top = \begin{bmatrix}1 & 2 & 3 \\ 2 & 3 & 4\end{bmatrix}
-```
+$$A = \begin{bmatrix} 1 & 2 \\ 2 & 3 \\ 3 & 4 \end{bmatrix}\to A^\top = \begin{bmatrix}1 & 2 & 3 \\ 2 & 3 & 4\end{bmatrix}$$
 
 This is already implemented in `matrix_op_self` using the self-defined operator `T*`
 
@@ -421,7 +343,7 @@ $A^{-1}$ is the inverse of a matrix, it works somewhat like a divisor of $A$ suc
 This is also already implemented in `linalg.c`, please refer to `mmatrix_linalg_get_inv` for the parameters
 
 
-To conclude this assignment, use the implemented matrix library to evaluate $x$, put it inside the matrix `x`. Do this in `image_proc_polyreg`. I have constructed the matrices $A$ and $b$ for you.
+To conclude this assignment, use the implemented matrix library to evaluate $x$, put it inside the matrix `a`. Do this in `image_proc_polyreg`. I have constructed the matrices $A$ and $b$ for you.
 
 > Actually I can kind of agree that the resulting matrix library is annoying to use... let's see if we may have some way to improve it and make it convenient to use... this needs to be considered if we were to try writing a library for the subteam...
 
