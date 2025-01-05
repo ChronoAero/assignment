@@ -1,7 +1,7 @@
-### Intermediate Step Checks
+# Intermediate Step Checks
 
 
-#### Opening Filter
+## Opening Filter
 
 **Opening Filter #1**
 ```
@@ -706,9 +706,9 @@ Dilation
 ]
 ```
 
-### Polynomial Fitting
+## Polynomial Fitting
 
-#### Small Sample
+### Small Sample
 
 $A^\top A$
 ```
