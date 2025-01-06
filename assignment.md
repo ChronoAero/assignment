@@ -405,7 +405,7 @@ However, this equation might not have a solution, as there might be some random 
 To approximate a solution (the matrix $x$), then we need to find the solution to:
 
 ```math
-A^\top A x = A^\top b \to x  = (A^\top A)^{-1}A^\top
+A^\top A x = A^\top b \to x  = (A^\top A)^{-1}A^\top b
 ```
 
 (This is the least squares solution method)
